@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FrontController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,9 +31,8 @@ Route::middleware('auth')->group(function () {
 
 
 //ここから記述！！
-Route::get('/form',function(){
-    return view('form');
-});
+Route::get('/',[FrontController::class,'index']);
+
 
 
 

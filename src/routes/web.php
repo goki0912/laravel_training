@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,6 +42,8 @@ Route::get('/thanks',function(){
     return view('thanks');
 })->name('thanks');
 
+//ログイン
+// Route::get('/system',[FrontController::class,'system'])->name('system');
 
 
 

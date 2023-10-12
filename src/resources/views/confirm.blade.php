@@ -42,10 +42,9 @@
 
   </div>
 
+  <button type="submit" name="back" value="back">再入力</button>
 
   <button type="submit">送信</button>
 
 </form>
-<a href="{{route('index')}}">再入力</a>
-
 </html>

@@ -37,8 +37,8 @@
     <h2></h2>
   </div>
   <div>
-    <h2>ご意見:{{ $data['opinion'] }}</h2>
-    <input type="hidden" name="opinion" value="{{$data['opinion'] }}">
+    <h2>ご意見:{{ $data['feedback'] }}</h2>
+    <input type="hidden" name="feedback" value="{{$data['feedback'] }}">
 
   </div>
 

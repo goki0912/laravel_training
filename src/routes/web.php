@@ -46,8 +46,8 @@ Route::get('/thanks',function(){
 })->name('thanks');
 
 //ログイン
-Route::get('/system',[FrontController::class,'system'])->name('system');
+// Route::get('/system',[AnswerController::class,'index'])->name('login');
 
-Route::get('/system/answer/index',[AnswerController::class,'index'])->middleware(['auth'])->name('index');
+Route::get('/system/answer/index',[AnswerController::class,'index'])->middleware(['auth'])->name('admin.index');
 
 require __DIR__.'/auth.php';

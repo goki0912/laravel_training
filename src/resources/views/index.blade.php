@@ -81,10 +81,10 @@
       <label for="permit"> 送信を許可します</label>
     </div>
     <div class="px-5 flex">
-      <label for="opinion" class="w-20">ご意見</label>
+      <label for="feedback" class="w-20">ご意見</label>
       <textarea
         class="block p-2.5 w-3/5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 resize-none focus:ring"
-        name="opinion" id="opinion" cols="30" rows="10" placeholder="入力してください" >{{old('opinion')}}</textarea>
+        name="feedback" cols="30" rows="10" placeholder="入力してください" >{{old('feedback')}}</textarea>
     </div>
 
     <div class="px-auto text-center">
@@ -94,7 +94,6 @@
     </div>
   </form>
 </body>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
+
 
 </html>

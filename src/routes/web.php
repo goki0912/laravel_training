@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\AnswerController;
+
 use App\Http\Controllers\ProfileController;
+use App\Models\Answer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -43,8 +46,8 @@ Route::get('/thanks',function(){
 })->name('thanks');
 
 //ログイン
-// Route::get('/system',[FrontController::class,'system'])->name('system');
+// Route::get('/system',[AnswerController::class,'index'])->name('login');
 
-
+Route::get('/system/answer/index',[AnswerController::class,'index'])->middleware(['auth'])->name('admin.index');
 
 require __DIR__.'/auth.php';

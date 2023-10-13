@@ -40,8 +40,4 @@ class FrontController extends Controller
         return redirect()->route('thanks');
     }
     //ログイン
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 }

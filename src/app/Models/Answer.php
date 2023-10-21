@@ -10,6 +10,8 @@ class Answer extends Model
 {
     use SoftDeletes;
 
+    use HasFactory;
+
     protected $table = 'answers';
 
     protected $fillable=['fullname', 'gender', 'age_id', 'feedback'];
@@ -21,4 +23,5 @@ class Answer extends Model
     {
         return $this->belongsTo(Age::class,'age_id');
     }
+
 }

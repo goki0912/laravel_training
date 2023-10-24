@@ -30,7 +30,8 @@ class AnswerFactory extends Factory
             },
             'gender'=>$gender,
             'age_id'=>$ageId,
-            'feedback'=>fake()->text()
+            'mail'=>fake()->safeEmail(),
+            'feedback'=>fake()->realText(),
 
             
         ];

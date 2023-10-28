@@ -58,11 +58,19 @@ class AnswerController extends Controller
             $view->with('ages', $ages);
         });
 
-
-        if ($request->filled('name')) {
-            $query->where('name','like','%'.$request->input('name').'%');
-        }
-        
         return view('auth.index', compact('answers'));
+    }
+
+    public function show($id) {
+        $answer=Answer::findOrFail($id);
+        
+        return view('auth.detail',compact('answer'));
+    }
+
+    public function destroy($id){
+        $answer=Answer::findOrFail($id);
+        $answer->delete();
+
+        return redirect()->route('admin.index')->with('success','削除しました');
     }
 }

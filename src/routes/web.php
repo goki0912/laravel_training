@@ -48,6 +48,10 @@ Route::get('/thanks',function(){
 //ログイン
 // Route::get('/system',[AnswerController::class,'index'])->name('login');
 
-Route::get('/system/answer/index',[AnswerController::class,'index'])->middleware(['auth'])->name('admin.index');
+Route::get('/system/answers/index',[AnswerController::class,'index'])->middleware(['auth'])->name('admin.index');
+
+route::get('/system/answers/{id}',[AnswerController::class,'show'])->middleware(['auth'])->name('admin.show');
+
+Route::delete('/system/answers/{id}',[AnswerController::class,'destroy'])->name('admin.destroy');
 
 require __DIR__.'/auth.php';

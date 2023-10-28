@@ -24,6 +24,12 @@
 
 <body class="bg-gray-100 text-gray-900 tracking-wider leading-normal">
 	@auth
+	@if(session('success'))
+    <div class="bg-green-200 text-green-800 p-3">
+        {{ session('success') }}
+    </div>
+@endif
+
 	<form method="POST" action="{{ route('logout') }}">
 		@csrf
 		<button type="submit">ログアウト</button>
@@ -53,14 +59,14 @@
 				<tbody>
 					@foreach($answers as $answer)
 
-					<tr>
-						<td>{{ $answer->id }}</td>
-						<td>{{ $answer->fullname }}</td>
-						<td>{{ $answer->gender === 1 ? '男性' : '女性' }}</td>
-						<td>{{ $answer->age->age }}</td>
-						<td>{{ $answer->feedback }}</td>
-						<td>{{ $answer->created_at }}</td>
-						<td><button type="" class="">詳細</button></td>
+					<tr onclick="window.location='{{ route('admin.show', ['id' => $answer->id]) }}';" class="cursor-pointer">
+							<td>{{ $answer->id }}</td>
+							<td>{{ $answer->fullname }}</td>
+							<td>{{ $answer->gender === 1 ? '男性' : '女性' }}</td>
+							<td>{{ $answer->age->age }}</td>
+							<td>{{ $answer->feedback }}</td>
+							<td>{{ $answer->created_at }}</td>
+						</a>
 					</tr>
 					@endforeach
 
@@ -95,8 +101,9 @@
 						<span class="sr-only">Close modal</span>
 					</button>
 					<div class="px-6 py-6 lg:px-8">
-						<h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">検索モーダル</h3>
-						<form class="space-y-6" action="#">
+						<h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Sign in to our platform</h3>
+						<form method="GET" class="space-y-6" action="{{route('admin.index')}}">
+							@csrf
 							<div>
 								<label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">氏名</label>
 								<input type="text" name="name" id="name"
@@ -120,9 +127,9 @@
 							<div>
 								<label for="gender" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">性別</label>
 								<div class="flex items-center pl-4 rounded dark:border-gray-700"">
-									<input type="radio" name="gender" id="man" value="1"
+									<input type=" radio" name="gender" id="man" value="1"
 									class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-									{{old('gender')==1?'checked':''}} checked>
+									{{old('gender')==1?'checked':''}}>
 									<label for="man"
 										class="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">男性</label>
 								</div>
@@ -169,6 +176,13 @@
 								<div>
 									<label for="keyword"
 										class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">キーワード</label>
+									<input type="text" name="keyword" id="keyword" placeholder="入力してください"
+										class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+								</div>
+
+								<div>
+									<label for="keyword"
+										class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">キーワード</label>
 									<input type="text" name="keyword" id="keyword"
 										class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
 										placeholder="入力してください">
@@ -179,8 +193,7 @@
 									<div class="flex items-start">
 										<div class="flex items-center h-5">
 											<input id="remember" type="checkbox" value=""
-												class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-600 dark:border-gray-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
-												required>
+												class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-600 dark:border-gray-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800">
 										</div>
 										<label for="remember" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember
 											me</label>

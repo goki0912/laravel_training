@@ -53,11 +53,17 @@ class AnswerController extends Controller
 
         $answers = $query->paginate(15);
 
+
         view()->composer('auth.index', function ($view) {
             $ages = Age::all();
             $view->with('ages', $ages);
         });
 
+
+        if ($request->filled('name')) {
+            $query->where('name','like','%'.$request->input('name').'%')
+        }
+        if
         return view('auth.index', compact('answers'));
     }
 }

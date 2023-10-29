@@ -29,7 +29,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect('/system/answer/index');
+        return redirect('/system/answers/index');
     }
 
     /**

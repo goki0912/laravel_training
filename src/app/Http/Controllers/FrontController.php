@@ -26,13 +26,7 @@ class FrontController extends Controller
     }
     public function store(Request $request)
     {
-        $answer = new Answer;
-        $answer->fullname = $request->input('fullname');
-        $answer->gender = $request->input('gender');
-        $answer->age_id = $request->input('age');
-        $answer->feedback = $request->input('feedback');
-        $answer->save();
-
+        Answer::createFromRequest($request);
         if ($request->input('back') == 'back') {
             return redirect('/')->withInput();
         }

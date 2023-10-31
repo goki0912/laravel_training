@@ -29,7 +29,12 @@
 		{{ session('success') }}
 	</div>
 	@endif
-
+	@if(session('error'))
+	<div class="bg-red-200 text-red-800 p-3">
+		{{ session('error') }}
+	</div>
+	@endif
+	
 	<form method="POST" action="{{ route('logout') }}">
 		@csrf
 		<button type="submit">ログアウト</button>
@@ -40,40 +45,47 @@
 
 		<!--Title-->
 		<h1>アンケート一覧</h1>
+		<form method="POST" action="{{route('choice_delete')}}">
+			@csrf
 
 		<!--Card-->
 		<div id='recipients' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+			<button type="submit" class="bg-red-500 text-white px-2 py-1 rounded">削除</button>
 
 			{{$answers->links()}}
-			<table id="example" class="stripe hover" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
-				<thead>
-					<tr>
-						<th data-priority="1">ID</th>
-						<th data-priority="2">名前</th>
-						<th data-priority="3">性別</th>
-						<th data-priority="4">年代</th>
-						<th data-priority="5">フィードバック</th>
-						<th data-priority="6">作成日時</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach($answers as $answer)
+				<table id="example" class="stripe hover" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
+					<thead>
+						<tr>
+							<th><input type="checkbox" id="select-all">全選択</th>
+							<th data-priority="1">ID</th>
+							<th data-priority="2">名前</th>
+							<th data-priority="3">性別</th>
+							<th data-priority="4">年代</th>
+							<th data-priority="5">フィードバック</th>
+							<th data-priority="6">作成日時</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach($answers as $answer)
 
-					<tr onclick="window.location='{{ route('admin.show', ['id' => $answer->id]) }}';" class="cursor-pointer">
-						<td>{{ $answer->id }}</td>
-						<td>{{ $answer->fullname }}</td>
-						<td>{{ $answer->gender === 1 ? '男性' : '女性' }}</td>
-						<td>{{ $answer->age->age }}</td>
-						<td>{{ $answer->feedback }}</td>
-						<td>{{ $answer->created_at }}</td>
-						</a>
-					</tr>
-					@endforeach
+						<tr class="cursor-pointer">
+							<td><input type="checkbox" name="delete[]" id="delete" value="{{$answer->id}}"></td>
+							<td>{{ $answer->id }}</td>
+							<td onclick="window.location='{{ route('admin.show', ['id' => $answer->id]) }}';">{{ $answer->fullname }}
+							</td>
+							<td>{{ $answer->gender === 1 ? '男性' : '女性' }}</td>
+							<td>{{ $answer->age->age }}</td>
+							<td>{{ $answer->feedback }}</td>
+							<td>{{ $answer->created_at }}</td>
+							</a>
+						</tr>
+						@endforeach
 
-				</tbody>
+					</tbody>
 
-			</table>
+				</table>
 
+			</form>
 
 		</div>
 		<!--/Card-->
@@ -236,7 +248,38 @@
 		<script src="https://cdn.tailwindcss.com"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/datepicker.min.js"></script>
-
+		<script>
+			$(document).ready(function() {
+					// 全選択のチェックボックスをクリックしたとき
+					$('#select-all').click(function(){
+							if ($(this).is(':checked')) {
+									// すべての行のチェックボックスを選択状態にする
+									$('input[type="checkbox"]').prop('checked', true);
+							} else {
+									// すべての行のチェックボックスを非選択状態にする
+									$('input[type="checkbox"]').prop('checked', false);
+							}
+					});
+	
+					// 個別の行のチェックボックスが変更されたとき
+					$('input[type="checkbox"]').change(function() {
+							// 全ての行が選択されているかどうかを確認
+							if ($('input[type="checkbox"]').length === $('input[type="checkbox"]:checked').length) {
+									// 全選択のチェックボックスを選択状態にする
+									$('#select-all').prop('checked', true);
+							} else {
+									// 全選択のチェックボックスを非選択状態にする
+									$('#select-all').prop('checked', false);
+							}
+					});
+	
+					var table = $('#example').DataTable({
+							responsive: true
+					});
+					table.columns.adjust().responsive.recalc();
+			});
+	</script>
+	
 </body>
 @endauth
 

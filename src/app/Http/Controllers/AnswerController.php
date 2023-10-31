@@ -7,6 +7,8 @@ use App\Models\Answer;
 use App\Models\Age;
 use Carbon\Carbon;
 
+use function Laravel\Prompts\error;
+
 class AnswerController extends Controller
 {
     // public function index()
@@ -43,5 +45,19 @@ class AnswerController extends Controller
         $answer->delete();
 
         return redirect()->route('admin.index')->with('success','削除しました');
+    }
+
+    public function choiceDelete(Request $request){
+
+        $choiceData=$request->input('delete');
+       
+        if (!empty($choiceData)) {
+            Answer::whereIn('id',$choiceData)->delete();
+
+            return redirect()->route('admin.index')->with('success','選択した項目を削除しました');
+
+        }else{
+            return redirect()->route('admin.index')->with('error','削除する項目が選択されていません');
+        }
     }
 }

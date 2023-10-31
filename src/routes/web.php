@@ -54,4 +54,6 @@ route::get('/system/answers/{id}',[AnswerController::class,'show'])->middleware(
 
 Route::delete('/system/answers/{id}',[AnswerController::class,'destroy'])->name('admin.destroy');
 
+Route::post('/system/answers/delete',[AnswerController::class,'choiceDelete'])->name('choice_delete');
+
 require __DIR__.'/auth.php';

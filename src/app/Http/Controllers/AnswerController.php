@@ -7,6 +7,8 @@ use App\Models\Answer;
 use App\Models\Age;
 use Carbon\Carbon;
 
+use function Laravel\Prompts\error;
+
 class AnswerController extends Controller
 {
     // public function index()
@@ -20,37 +22,8 @@ class AnswerController extends Controller
 
     public function index(Request $request)
     {
-        $query = Answer::query();
-
-        if ($request->filled('name')) {
-            $query->where('fullname', 'like', '%' . $request->input('name') . '%');
-        }
-
-        if ($request->filled('age')) {
-            $query->where('age_id', $request->input('age'));
-        }
-
-        if ($request->filled('gender')) {
-            $query->where('gender', $request->input('gender'));
-        }
-
-        if ($request->filled('opinion')) {
-            $query->where('feedback', 'like', '%' . $request . '%');
-        }
-
-        if ($request->filled('start') && $request->filled('end')) {
-            $StartDateString=$request->input('start');
-            $EndDateString=$request->input('end');
-            $StartConvertedDate=Carbon::createFromFormat('m/d/Y',$StartDateString)->format('Y-m-d');
-            $EndConvertedDate=Carbon::createFromFormat('m/d/Y',$EndDateString)->format('Y-m-d');
-            $query->whereBetween('created_at',[$StartConvertedDate,$EndConvertedDate]);
-        }
-
-        if ($request->filled('keyword')) {
-            $query->where('mail', 'like', '%' . $request->input('keyword') . '%')
-                ->orWhere('feedback', 'like', '%' . $request->input('keyword') . '%');
-        }
-
+        $query = Answer::query()->filterByRequest($request);
+        
         $answers = $query->paginate(15);
 
         view()->composer('auth.index', function ($view) {
@@ -72,5 +45,19 @@ class AnswerController extends Controller
         $answer->delete();
 
         return redirect()->route('admin.index')->with('success','削除しました');
+    }
+
+    public function choiceDelete(Request $request){
+
+        $choiceData=$request->input('delete');
+       
+        if (!empty($choiceData)) {
+            Answer::whereIn('id',$choiceData)->delete();
+
+            return redirect()->route('admin.index')->with('success','選択した項目を削除しました');
+
+        }else{
+            return redirect()->route('admin.index')->with('error','削除する項目が選択されていません');
+        }
     }
 }

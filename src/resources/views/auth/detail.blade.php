@@ -93,7 +93,6 @@
       </form>
     </div>
   </div>
-hogehogehoge
 </body>
 
 </html>

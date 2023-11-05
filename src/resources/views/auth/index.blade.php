@@ -78,10 +78,10 @@
 					<tbody>
 						@foreach($answers as $answer)
 
-						<tr class="cursor-pointer">
-							<td><input type="checkbox" name="delete[]" id="delete" value="{{$answer->id}}"></td>
+						<tr class="cursor-pointer" onclick="window.location='{{ route('admin.show', ['id' => $answer->id]) }}';">
+							<td><input type="checkbox" name="delete[]" id="delete" value="{{$answer->id}}" onclick="event.stopPropagation();"></td>
 							<td>{{ $answer->id }}</td>
-							<td onclick="window.location='{{ route('admin.show', ['id' => $answer->id]) }}';">{{ $answer->fullname }}
+							<td>{{ $answer->fullname }}
 							</td>
 							<td>{{ $answer->gender === 1 ? '男性' : '女性' }}</td>
 							<td>{{ $answer->age->age }}</td>
